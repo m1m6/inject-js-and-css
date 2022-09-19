@@ -1,0 +1,5 @@
+{
+  "main.script.js": "script.js",
+  "secondary.js": "secondary.js",
+  "main.styles.css": "styles.css"
+}

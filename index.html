@@ -8,8 +8,8 @@
       Need a visual blank slate?
       Remove all code in `styles.css`!
     -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
+    <!-- <script type="module" src="script.js"></script> -->
   </head>
   <body>
     <nav>
@@ -17,7 +17,36 @@
       <a href="/page2.html">Other page</a>
     </nav>
     <main>
-      <h1>Home page</h1>
+      <h1 class="h1">Home page</h1>
+      <span>H1 Style is coming from dynamic loaded styles.css</span>
     </main>
+    <script>
+      fetch('./assets.json').then(async (data) => {
+        const assets = await data.json();
+        console.log(assets);
+
+        if (assets) {
+          Object.keys(assets).forEach((key) => {
+            if (key.includes('.js')) {
+              var script = document.createElement('script');
+              script.type = 'text/javascript';
+              script.src = assets[key];
+              document.body.appendChild(script);
+            } else if (key.includes('.css')) {
+              var head = document.getElementsByTagName('head')[0];
+              var link = document.createElement('link');
+              link.rel = 'stylesheet';
+              link.type = 'text/css';
+              link.media = 'all';
+              link.href = assets[key];
+              head.appendChild(link);
+            }
+          });
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', assets['script.js']);
+        document.body.appendChild(s);
+      });
+    </script>
   </body>
 </html>
